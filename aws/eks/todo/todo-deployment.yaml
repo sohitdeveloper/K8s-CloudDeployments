@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-deployment
+  labels:
+    app: todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+        - name: todo
+          image: sohit28/todo-be:latest
+          resources:
+            requests:
+              cpu: "100m" # Minimal CPU request to satisfy HPA requirements
+            limits:
+              cpu: "500m" # Limit to 500 millicores of CPU
+          env:
+            - name: DATABASE_HOST
+              value: postgres # this should match the postgres service name
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: todo-secret
+                  key: DATABASE_NAME
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: todo-secret
+                  key: DATABASE_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: todo-secret
+                  key: DATABASE_PASSWORD
+          ports:
+            - containerPort: 8000
+          imagePullPolicy: Always
