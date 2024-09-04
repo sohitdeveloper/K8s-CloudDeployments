@@ -41,6 +41,12 @@ When using a PVC to mount an EBS volume for PostgreSQL, the mount point (`/var/l
 
 This ensures that PostgreSQL initializes in a clean directory, preventing conflicts with system-generated files like `lost+found`.
 
+# In your EKS cluster, specifying the --platform linux/amd64 tag is essential during the Docker build because the cluster likely runs on nodes with AMD64 architecture.
+
+```bash
+docker build --platform linux/amd64 -t <username/image-name> .
+```
+
 ## Conclusion
 
 Properly configuring IAM permissions and OIDC is essential for securely managing PVCs and other resources in AWS. Additionally, specifying the `PGDATA` variable ensures smooth PostgreSQL initialization when using mounted volumes.
