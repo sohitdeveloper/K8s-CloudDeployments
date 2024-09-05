@@ -1,5 +1,3 @@
-Here’s a markdown file documenting the issue of IP exhaustion on AWS EC2 nodes in a Kubernetes cluster, along with steps to identify and resolve the issue. This file is designed to help anyone who runs into a similar problem.
-
 ```markdown
 # Resolving IP Exhaustion Issues in Kubernetes on AWS (t2.medium Nodes)
 
